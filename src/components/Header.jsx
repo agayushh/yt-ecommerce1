@@ -1,5 +1,6 @@
 import React from "react";
 import { BiCart } from "react-icons/bi";
+import { NavLink } from "react-router-dom";
 
 export default function Header() {
   return (
@@ -8,9 +9,15 @@ export default function Header() {
         <div className="flex-1"></div> {/* Left spacer */}
         <div className="flex text-xl justify-center">
           <div className="flex gap-x-20">
-            <p className="cursor-pointer">Home</p>
-            <p className="cursor-pointer">Cart</p>
-            <p className="cursor-pointer">About</p>
+            <NavLink to="/" className="cursor-pointer">
+              Home
+            </NavLink>
+            <NavLink to="/cart" className="cursor-pointer">
+              Cart
+            </NavLink>
+            <NavLink to="/about" className="cursor-pointer">
+              About
+            </NavLink>
           </div>
         </div>
         <div className="flex-1 flex justify-end">
