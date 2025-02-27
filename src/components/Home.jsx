@@ -1,16 +1,24 @@
-import React from "react";
-import { useRecoilValue } from "recoil";
-import { items } from "./state/atom";
+import React, { useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { items, searchedItems } from "./state/atom";
 
 export default function Home() {
+  const [search, setSearch] = useRecoilState(searchedItems);
+
   const product = useRecoilValue(items);
+
+  localStorage.setItem("searchedItem", search);
 
   return (
     <div className="flex flex-col items-center w-screen">
       <input
         type="text"
         placeholder="Search for item"
+        value={search}
         className="w-[40%] p-3 bg-slate-100 m-4 border-2 border-black"
+        onChange={(e) => {
+          setSearch(e.target.value);
+        }}
       />
       <div className="flex flex-wrap justify-center gap-4 p-4">
         {product.map((samaan) => (
