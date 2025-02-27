@@ -6,7 +6,7 @@ export default function Home() {
   const product = useRecoilValue(items);
 
   return (
-    <div className="flex flex-col justify-center w-screen">
+    <div className="flex flex-col items-center w-screen">
       <input
         type="text"
         placeholder="Search for item"
