@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { items, searchedItems } from "./state/atom";
+import { items, searchedItems, searchSpecificItems } from "./state/atom";
 
 export default function Home() {
   const [search, setSearch] = useRecoilState(searchedItems);
 
   const product = useRecoilValue(items);
 
+  const itemsInSearchBar = useRecoilValue(searchSpecificItems);
+
   localStorage.setItem("searchedItem", search);
 
   return (
-    <div className="flex flex-col items-center w-screen">
+    <div className="flex flex-col items-center w-fit">
       <input
         type="text"
         placeholder="Search for item"
@@ -21,7 +23,7 @@ export default function Home() {
         }}
       />
       <div className="flex flex-wrap justify-center gap-4 p-4">
-        {product.map((samaan) => (
+        {itemsInSearchBar.map((samaan) => (
           <div
             key={samaan.id}
             className="flex flex-col items-center w-64 p-4 border rounded-lg shadow-md"
