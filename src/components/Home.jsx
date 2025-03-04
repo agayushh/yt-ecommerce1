@@ -12,7 +12,7 @@ export default function Home() {
   localStorage.setItem("searchedItem", search);
 
   return (
-    <div className="flex flex-col items-center w-fit">
+    <div className="flex flex-col items-center w-full">
       <input
         type="text"
         placeholder="Search for item"
