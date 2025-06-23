@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
-  cartItems,
+  
   items,
   searchedItems,
   searchSpecificItems,
@@ -12,22 +12,23 @@ export default function Home() {
 
   const itemsInSearchBar = useRecoilValue(searchSpecificItems);
 
-  const [carted, setCarted] = useRecoilState(cartItems);
+  const [carted, setCarted] = useRecoilState(items);
 
   useEffect(() => {
     localStorage.setItem("searchedItem", search);
   }, [search]);
 
-  const handleToggleCart = (product) => {
-    const isInCart = carted.some((item) => item.id === product.id);
-    let updatedCart;
-    if (isInCart) {
-      updatedCart = carted.filter((item) => item.id !== product.id);
-    } else {
-      updatedCart = [...carted, { ...product, count: 1 }];
-    }
-    setCarted(updatedCart);
-    localStorage.setItem("cartedInItems", JSON.stringify(updatedCart));
+  const handleToggleCart = (productId) => {
+    setCarted((prevItems) => {
+      const updatedItems = prevItems.map((item) => {
+        if (item.id === productId) {
+          return { ...item, count: item.count + 1 };
+        }
+        return item;
+      });
+      localStorage.setItem("cartItems", JSON.stringify(updatedItems));  
+      return updatedItems;
+    })
   };
 
   return (
@@ -43,7 +44,8 @@ export default function Home() {
       />
       <div className="flex flex-wrap justify-center gap-4 p-4">
         {itemsInSearchBar.map((samaan) => {
-          const isInCart = carted.some((item) => item.id === samaan.id);
+          console.log(carted)
+          const isInCart = carted.find((item) => item.id === samaan.id)?.count > 0;
           return (
             <div
               key={samaan.id}
@@ -64,7 +66,7 @@ export default function Home() {
                     ? "bg-red-600 hover:bg-red-400 text-white"
                     : "bg-blue-600 hover:bg-blue-400 text-white"
                 }`}
-                onClick={() => handleToggleCart(samaan)}
+                onClick={() => handleToggleCart(samaan.id)}
               >
                 {isInCart ? "Remove from cart" : "Add to cart"}
               </button>

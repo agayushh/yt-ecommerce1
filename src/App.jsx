@@ -7,6 +7,8 @@ import { useRecoilState } from "recoil";
 import { items } from "./components/state/atom";
 import { useEffect, useState } from "react";
 import productList from "./components/data";
+import Login from "./Login";
+import Signup from "./Signup";
 
 function App() {
   const [product, setProduct] = useRecoilState(items);
@@ -26,6 +28,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/cart" element={<Cart />}></Route>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
           </Routes>
         )}
       </BrowserRouter>
@@ -34,3 +38,4 @@ function App() {
 }
 
 export default App;
+// Add these inside the Routes component:

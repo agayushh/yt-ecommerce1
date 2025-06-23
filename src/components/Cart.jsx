@@ -1,21 +1,22 @@
 import React, { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { cartItems, items } from "./state/atom";
+import { items } from "./state/atom";
 
 export default function Cart() {
   // const product = useRecoilValue(items);
-  const [carted, setCarted] = useRecoilState(cartItems);
+  const [allItems, setAllItems] = useRecoilState(items);
+
+  const carted = allItems.filter((item)=>item.count >0)
 
   const updateQuantity = (id, count) => {
-    setCarted((prevValue) =>
-      prevValue
-        .map((item) =>
-          item.id === id
-            ? { ...item, count: Math.max(0, item.count + count) }
-            : item
-        )
-        .filter((item) => item.count > 0)
-    );
+    setAllItems((prevValue) => {
+      return prevValue.map((item) => {
+        if (item.id === id) {
+          return { ...item, count: item.count + count };
+        }
+        return item;
+      });
+    });
   };
   return (
     <div>

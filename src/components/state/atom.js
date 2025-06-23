@@ -1,7 +1,16 @@
 import { atom, selector } from "recoil";
+import productList from "../data";
+
+const localStorageValues = localStorage.getItem("cartItems");
 
 export const items = atom({
-  default: [],
+  default: productList.map((item) => {
+    const aa = JSON.parse(localStorageValues).find((i) => i.id === item.id);
+    return {
+      ...item,
+      count: aa ? aa.count : 0,
+    };
+  }),
   key: "allItems",
 });
 
@@ -10,10 +19,10 @@ export const searchedItems = atom({
   key: "searchItems",
 });
 
-export const cartItems = atom({
-  key: "carted_items",
-  default: JSON.parse(localStorage.getItem("cartItems")) || []
-});
+// export const cartItems = atom({
+//   key: "carted_items",
+//   default: JSON.parse(localStorage.getItem("cartItems")) || []
+// });
 
 export const searchSpecificItems = selector({
   key: "specific_Items",
